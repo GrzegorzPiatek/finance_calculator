@@ -32,30 +32,22 @@ def title():
     Display the main title on the Streamlit app.
     """
     st.title("Finance Calculator")
-
 def compound_interest():
-    """
-    Gather user inputs for the compound interest calculator.
-    """
     st.header("Compound Interest Calculator")
     present_value = st.number_input("Present value ($)", min_value=0.0, value=1000.0)
     interest_per_year = st.number_input("Interest per year (%)", min_value=0.0, value=5.0, step=0.1)
     number_of_years = st.number_input("Number of years", min_value=1, value=10)
     capitalizations_per_year = st.number_input("Number of capitalizations per year", min_value=1, value=12)
 
-    # Button to perform calculation
+    ci = CompoundInterest(present_value, interest_per_year, number_of_years, capitalizations_per_year)
+
     if st.button("Calculate"):
-        ci = CompoundInterest(present_value, interest_per_year, number_of_years, capitalizations_per_year)
-        results = ci.calculate_interest()
+        ci.calculate_interest()
+        results = ci.get_results()
+        df_results = pd.DataFrame(results, columns=['Year', 'Period', 'Amount'])
 
-        # Create a DataFrame including the initial state (year 0)
-        initial_data = [(0, 0, present_value)]  # Year 0, Period 0, Initial Amount
-        results_data = [(r[0], r[1], r[2]) for r in results if r[1] == capitalizations_per_year]
-        df_results = pd.DataFrame(initial_data + results_data, columns=['Year', 'Period', 'Amount'])
-
-        # Future Value and Earn calculation
-        future_value = df_results['Amount'].iloc[-1]  # The last amount is the future value
-        earn = future_value - present_value
+        future_value = ci.get_future_value()
+        earn = ci.get_earnings()
 
         st.subheader("Results of Compound Interest Calculation:")
         st.write(f"Future Value: ${future_value:,.2f}")
@@ -73,7 +65,6 @@ def compound_interest():
         ax.set_ylim(bottom=min(df_results['Amount'].min(), present_value))  # Ensure the Y-axis includes the initial value
         st.pyplot(fig)
 
-        # Displaying the dataframe after the chart
         st.write("Detailed Compound Interest Values by Year:")
         st.dataframe(df_results.style.format({"Amount": "${:,.2f}"}))  # Formatting the Amount column as currency
 
