@@ -36,9 +36,9 @@ def title():
 
 def compound_interest():
     st.header("Procent składany")
-    present_value = st.number_input("[PV] Wartość początkowa ($)", min_value=0.0, value=1000.0, step=1000.0)
+    present_value = st.number_input("[PV] Wartość początkowa (zł)", min_value=0.0, value=1000.0, step=1000.0)
     interest_per_year = st.number_input("[I/Y] Oprocentowanie w skali roku (%)", min_value=0.0, value=5.0, step=0.1)
-    number_of_years = st.number_input("[N] Czas trwania inwestycji w latach]", min_value=1, value=10)
+    number_of_years = st.number_input("[N] Czas trwania inwestycji w latach", min_value=1, value=10)
     capitalizations_per_year = st.number_input("[C/Y] Liczba kapitalizacji w roku", min_value=1, value=12)
 
     ci = CompoundInterest(present_value, interest_per_year, number_of_years, capitalizations_per_year)
@@ -49,15 +49,15 @@ def compound_interest():
         df_results = pd.DataFrame(results, columns=['Year', 'Period', 'Amount'])
         future_value = ci.get_future_value()
         earn = ci.get_earnings()
-        display_results(df_results, future_value, f"Zysk: ${earn:,.2f}")
+        display_results(df_results, future_value, f"Zysk: {earn:,.2f} zł")
 
 def regular_investment():
     st.header("Regularne inwestycje")
-    present_value = st.number_input("[PV] Wartość początkowa ($)", min_value=0.0, value=1000.0, step=1000.0)
+    present_value = st.number_input("[PV] Wartość początkowa (zł)", min_value=0.0, value=1000.0, step=1000.0)
     interest_per_year = st.number_input("[I/Y] Oprocentowanie w skali roku (%)", min_value=0.0, value=5.0, step=0.1)
     number_of_years = st.number_input("[N] Czas trwania inwestycji w latach]", min_value=1, value=10)
     capitalizations_per_year = st.number_input("[C/Y] Liczba kapitalizacji w roku", min_value=1, value=12)
-    pmt = st.number_input("[PMT] Kwota regularnej inwestycji ($)", min_value=0.0, value=100.0)
+    pmt = st.number_input("[PMT] Kwota regularnej inwestycji (zł)", min_value=0.0, value=100.0)
     periods_per_year = st.number_input("[P/YR] Liczba wpłat w ciągu roku", min_value=1, max_value=12, value=1)
 
     ri = RegularInvestment(present_value, interest_per_year, number_of_years, capitalizations_per_year, pmt, periods_per_year)
@@ -68,7 +68,7 @@ def regular_investment():
         df_results = pd.DataFrame(results, columns=['Year', 'Period', 'Amount'])
         future_value = ri.get_future_value()
         total_payments = ri.get_total_payments()
-        display_results(df_results, future_value, f"Całkowita wartość wpłat: ${total_payments:,.2f}")
+        display_results(df_results, future_value, f"Całkowita wartość wpłat: {total_payments:,.2f} zł")
 
 def plot_results(df_results, title, y_label, present_value):
     """
@@ -100,11 +100,11 @@ def display_results(df_results, future_value, additional_info):
     additional_info (str): Additional formatted information to display, like total payments.
     """
     st.subheader("Szczegółowe wyniki:")
-    st.write(f"[FV] Wartość końcowa: ${future_value:,.2f}")
+    st.write(f"[FV] Wartość końcowa: {future_value:,.2f} zł")
     st.write(additional_info)
-    st.pyplot(plot_results(df_results, "Wzrost wartości w czasie", "Wartość ($)", df_results['Amount'].iloc[0]))
+    st.pyplot(plot_results(df_results, "Wzrost wartości w czasie", "Wartość (zł)", df_results['Amount'].iloc[0]))
     st.write("Szczegółowe dane:")
-    st.dataframe(df_results.style.format({"Amount": "${:,.2f}"}))  # Formatting the Amount column as currency
+    st.dataframe(df_results.style.format({"Amount": "{:,.2f} zł"}))  # Formatting the Amount column as currency
 
 
 def footer():
