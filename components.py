@@ -53,12 +53,12 @@ def compound_interest():
 
 def regular_investment():
     st.header("Regularne inwestycje")
-    present_value = st.number_input("[PV] Wartość początkowa (zł)", min_value=0.0, value=1000.0, step=1000.0)
+    present_value = st.number_input("[PV] Wartość początkowa (zł)", min_value=0.0, value=0.0, step=1000.0)
     interest_per_year = st.number_input("[I/Y] Oprocentowanie w skali roku (%)", min_value=0.0, value=5.0, step=0.1)
-    number_of_years = st.number_input("[N] Czas trwania inwestycji w latach]", min_value=1, value=10)
+    number_of_years = st.number_input("[N] Czas trwania inwestycji w latach]", min_value=1, value=10, step=1)
     capitalizations_per_year = st.number_input("[C/Y] Liczba kapitalizacji w roku", min_value=1, value=12)
-    pmt = st.number_input("[PMT] Kwota regularnej inwestycji (zł)", min_value=0.0, value=100.0)
-    periods_per_year = st.number_input("[P/YR] Liczba wpłat w ciągu roku", min_value=1, max_value=12, value=1)
+    pmt = st.number_input("[PMT] Kwota regularnej inwestycji (zł)", min_value=0.0, value=100.0, step=100.0)
+    periods_per_year = st.number_input("[P/YR] Liczba wpłat w ciągu roku", min_value=1, max_value=52, step=1)
 
     ri = RegularInvestment(present_value, interest_per_year, number_of_years, capitalizations_per_year, pmt, periods_per_year)
     

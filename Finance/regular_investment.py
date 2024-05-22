@@ -1,11 +1,11 @@
 class RegularInvestment:
-    def __init__(self, initial_investment, interest_per_year, number_of_years, capitalizations_per_year, pmt, periods_per_year):
+    def __init__(self, initial_investment, interest_per_year, number_of_years, capitalizations_per_year, pmt, payments_per_year):
         self.initial_investment = initial_investment
         self.interest_per_year = interest_per_year
         self.number_of_years = number_of_years
         self.capitalizations_per_year = capitalizations_per_year
         self.pmt = pmt
-        self.periods_per_year = periods_per_year
+        self.payments_per_year = payments_per_year
         self.results = []  # To store results after calculation
         self.future_value = None
         self.total_payments = 0  # Initialize total payments made
@@ -15,7 +15,7 @@ class RegularInvestment:
         Calculate the future value of regular investments with periodic payments and total payments made.
         """
         rate_per_period = self.interest_per_year / 100 / self.capitalizations_per_year
-        payment_periodicity = self.capitalizations_per_year // self.periods_per_year
+        payment_periodicity = self.capitalizations_per_year // self.payments_per_year
         self.results.append((0, 0, self.initial_investment))  # Include the initial investment
         amount = self.initial_investment
         
